@@ -33,10 +33,10 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build Docker Image
-        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/cicd-node-app .
+        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/nodejs-demo-app .
 
       - name: Push Docker Image
-        run: docker push ${{ secrets.DOCKER_USERNAME }}/cicd-node-app
+        run: docker push ${{ secrets.DOCKER_USERNAME }}/nodejs-demo-app
 
   deploy:
     needs: build-and-push
@@ -52,7 +52,7 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
 
           script: |
-            docker pull ${{ secrets.DOCKER_USERNAME }}/cicd-node-app
+            docker pull ${{ secrets.DOCKER_USERNAME }}/nodejs-demo-app
 
             docker stop cicd-container || true
 
@@ -61,4 +61,4 @@ jobs:
             docker run -d \
               --name cicd-container \
               -p 3000:3000 \
-              ${{ secrets.DOCKER_USERNAME }}/cicd-node-app
+              ${{ secrets.DOCKER_USERNAME }}/nodejs-demo-app
