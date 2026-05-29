@@ -36,3 +36,4 @@ jobs:
 
     - name: Push Docker Image
       run: docker push ${{ secrets.DOCKER_USERNAME }}/nodejs-demo-app
+      
